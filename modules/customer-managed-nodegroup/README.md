@@ -1,13 +1,12 @@
-# a hack to get instance profile name by iam role name
-# the instance profile name is created by the managed nodegroup, and it can't output the instance profile name
-data "external" "instance_profile" {
-  program = ["bash", "get-instance-profile-by-iam-role-name.sh"]
-}
+# Module for Self-Managed Node Groups for EKS
 
-locals {
-  instance_profile_name = data.external.instance_profile.result.profile_name
-}
+This module creates only the node group, not EKS.
 
+Idea is to create another stand-alone node group in a separate VPC/AWS account (with peering to the VPC where EKS is created), to join the created EKS.
+
+Usage example:
+
+```
 module "nodegroup" {
   source = "../modules/customer-managed-nodegroup"
 
@@ -22,3 +21,17 @@ module "nodegroup" {
   control_plane_sg_id   = data.terraform_remote_state.eks.outputs.eks_security_group_id
   peering_vpc_cidr      = data.terraform_remote_state.network.outputs.main_vpc_cidr
 }
+```
+
+Note that, the `instance_profile_name` isn't an output of any terraform module, so in order to get this, you can do a hack like:
+
+```
+# in the shell script, run AWS CLI to get profile name by IAM role name and return a JSON with jq
+data "external" "instance_profile" {
+  program = ["bash", "get-instance-profile-by-iam-role-name.sh"]
+}
+
+locals {
+  instance_profile_name = data.external.instance_profile.result.profile_name
+}
+```

@@ -8,7 +8,7 @@ terraform {
   }
   backend "s3" {
     bucket         = "tf-state-391996659322"
-    key            = "tf-eks-anywhere/step4/terraform.tfstate"
+    key            = "tf-eks-anywhere/step3/terraform.tfstate"
     region         = "eu-central-1"
     encrypt        = true
     dynamodb_table = "tf_state_lock_391996659322"
@@ -17,9 +17,6 @@ terraform {
 
 provider "aws" {
   region = "eu-central-1"
-  ignore_tags {
-    key_prefixes = ["kubernetes.io/"]
-  }
 }
 
 data "terraform_remote_state" "network" {

@@ -13,3 +13,7 @@ output "kubeconfig-certificate-authority-data" {
 output "security_group_id" {
   value = aws_eks_cluster.cluster.vpc_config[0].cluster_security_group_id
 }
+
+output "worker_node_role_name" {
+  value = aws_iam_role.worker_role.name
+}

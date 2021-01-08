@@ -1,5 +1,7 @@
-Fill in needed variables in `terraform.tfvars`, get required info from step 2 Terraform output.
+# Additional Customer Managed Node Group in Another VPC
 
-In real world, TF states will be saved from S3 and fetched from remote state. Or all the steps can be merged in to the same repo.
+Create a "customer managed" node group to use flexible launch template.
 
-The current setup is purely for clearer logic demostration purpose.
+At the moment, managed node group (for example created by EKS) also allows you to bring your own user data script for cusomization.
+
+The purpose of using a "customer managed" (aka, creating your own ASG and LT) is for flexible security group rules configuration so that this new node group can talk to other node groups in other VPCs.
