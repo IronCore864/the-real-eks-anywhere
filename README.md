@@ -22,6 +22,8 @@ Hence, this is the **REAL** EKS Anywhere and I released it earlier.
 
 It's not official. Only a simple personal hobby work.
 
+At the moment, due to restrictions from the EKS control plane, the traffic to other subnets which doesn’t belong to the VPC where the control plane lives are not properly routed, so you might experience time-outs when you try to do, for example, kubectl logs. For production-grade multi-VPC cluster, you might want to be able to manage your control plane as well, for example, with kops.
+
 ## Why Do We Need This
 
 I'll write another article on this and put the link here later.
